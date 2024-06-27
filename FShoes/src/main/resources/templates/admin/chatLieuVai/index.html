@@ -1,0 +1,153 @@
+<!--<script th:inline="javascript">-->
+<!--    $(document).ready(function() {-->
+<!--        // Intercept form submission and handle with Ajax-->
+<!--        $('#chatLieuVaiForm').submit(function(e) {-->
+<!--            e.preventDefault();-->
+
+<!--            var formData = $(this).serialize();-->
+<!--            $.ajax({-->
+<!--                url: $(this).attr('action'),-->
+<!--                type: 'POST',-->
+<!--                data: formData,-->
+<!--                success: function(response) {-->
+<!--                    if (response === 'success') {-->
+<!--                        // Clear form fields after successful submission-->
+<!--                        $('#chatLieuVaiForm')[0].reset();-->
+
+<!--                        // Reload the chatLieuVai list-->
+<!--                        loadChatLieuVaiList();-->
+<!--                    } else {-->
+<!--                        alert('Thêm chất liệu không thành công');-->
+<!--                    }-->
+<!--                },-->
+<!--                error: function() {-->
+<!--                    alert('Đã xảy ra lỗi trong quá trình thêm chất liệu');-->
+<!--                }-->
+<!--            });-->
+<!--        });-->
+
+<!--        // Function to load chatLieuVai list-->
+<!--        function loadChatLieuVaiList() {-->
+<!--            $.ajax({-->
+<!--                url: '/thuoctinhsanpham/chatLieuVai',-->
+<!--                type: 'GET',-->
+<!--                success: function(data) {-->
+<!--                    $('#data').html(data);-->
+<!--                },-->
+<!--                error: function() {-->
+<!--                    alert('Đã xảy ra lỗi trong quá trình tải danh sách chất liệu vải');-->
+<!--                }-->
+<!--            });-->
+<!--        }-->
+
+
+<!--        // Initial load of chatLieuVai list on page load-->
+<!--        //  loadChatLieuVaiList();-->
+<!--    });-->
+<!--</script>-->
+
+
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/fragments/head :: head">
+    <!-- Required meta tags -->
+
+</head>
+<body>
+<div class="container-scroller">
+    <!-- partial:partials/_navbar.html -->
+    <nav th:replace="admin/fragments/navbar:: navbar"></nav>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_settings-panel.html -->
+        <div th:replace="admin/fragments/theme_setting :: theme_setting"></div>
+        <div th:replace="admin/fragments/right_sidebar :: right_sidebar"></div>
+        <!-- partial -->
+        <!-- partial:partials/_sidebar.html -->
+        <nav th:replace="admin/fragments/sidebar :: sidebar" ></nav>
+        <!-- partial -->
+        <div class="main-panel">
+            <div class="content-wrapper" >
+                <div id="data">
+                    <h1>Chat lieu vai</h1>
+
+                    <h2>Add Chat Lieu Vai</h2>
+                    <form id="chatLieuVaiForm" th:action="@{/chatlieuvai/add}" th:object="${chatLieuVai}" method="post">
+                        <input type="hidden" th:field="*{id}" />
+                        <label>Ten Loai Chat Lieu Vai: <input type="text" th:field="*{tenChatLieuVai}"></label><br>
+                        <label>Trạng Thái:</label><br/>
+                        <input type="radio" th:field="*{trangThai}" value="1" /> Hoạt động<br/>
+                        <input type="radio" th:field="*{trangThai}" value="0" /> Không hoạt động<br/>
+                        <button type="submit">Add</button>
+                        <button type="submit" th:formaction="/chatlieuvai/update"  formmethod="post">Update</button>
+
+                    </form>
+
+                    <h2>List Chat Lieu Vai</h2>
+                    <table border="1" id="chatLieuVaiTable">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Ten Loai Chat Lieu Vai</th>
+                            <th>Created At</th>
+                            <th>Updated At</th>
+                            <th>Trang Thai</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody >
+                        <tr th:each="chatLieuVai : ${listChatLieuVai}">
+                            <td th:text="${chatLieuVai.id}"></td>
+                            <td th:text="${chatLieuVai.tenChatLieuVai}"></td>
+                            <td th:text="${chatLieuVai.createdAt}"></td>
+                            <td th:text="${chatLieuVai.updatedAt}"></td>
+                            <td th:text="${chatLieuVai.trangThai}"></td>
+                            <td>
+                                <a th:href="@{/templates/admin/chatLieuVai/chatlieuvai/edit/{id}(id=${chatLieuVai.id})}">Edit</a>
+                                <a  th:href="@{/templates/admin/chatLieuVai/chatlieuvai/delete/{id}(id=${chatLieuVai.id})}">Delete</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- content-wrapper ends -->
+            <!-- partial:partials/_footer.html -->
+            <footer th:replace="admin/fragments/footer :: footer"></footer>
+            <!-- partial -->
+        </div>
+        <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+</div>
+<!-- container-scroller -->
+
+
+
+
+<!-- JavaScript Dependencies -->
+<script th:src="@{/vendors/js/vendor.bundle.base.js}"></script>
+<!-- endinject -->
+<!-- Plugin js for this page -->
+<script th:src="@{/vendors/chart.js/Chart.min.js}"></script>
+<script th:src="@{/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js}"></script>
+<script th:src="@{/vendors/progressbar.js/progressbar.min.js}"></script>
+<!-- End plugin js for this page -->
+<!-- inject:js -->
+<script th:src="@{/js/off-canvas.js}"></script>
+<script th:src="@{/js/hoverable-collapse.js}"></script>
+<script th:src="@{/js/template.js}"></script>
+<script th:src="@{/js/settings.js}"></script>
+<script th:src="@{/js/todolist.js}"></script>
+<!-- endinject -->
+<!-- Custom js for this page-->
+<script th:src="@{/js/dashboard.js}"></script>
+<script th:src="@{/js/Chart.roundedBarCharts.js}"></script>
+
+
+</body>
+
+</html>
+

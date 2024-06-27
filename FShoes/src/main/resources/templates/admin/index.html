@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="admin/fragments/head :: head">
+  <!-- Required meta tags -->
+
+</head>
+<body>
+  <div class="container-scroller"> 
+    <!-- partial:partials/_navbar.html -->
+   <nav th:replace="admin/fragments/navbar:: navbar"></nav>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      <!-- partial:partials/_settings-panel.html -->
+      <div th:replace="admin/fragments/theme_setting :: theme_setting"></div>
+      <div th:replace="admin/fragments/right_sidebar :: right_sidebar"></div>
+      <!-- partial -->
+      <!-- partial:partials/_sidebar.html -->
+      <nav th:replace="admin/fragments/sidebar ::sidebar" ></nav>
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper" id="content-wrapper">
+
+        </div>
+
+        <!-- content-wrapper ends -->
+        <!-- partial:partials/_footer.html -->
+        <footer th:replace="admin/fragments/footer :: footer"></footer>
+        <!-- partial -->
+      </div>
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+
+
+
+
+ <div th:replace="admin/fragments/javaScript::javascript"></div>
+
+
+</body>
+
+</html>
+
